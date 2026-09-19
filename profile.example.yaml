@@ -1,0 +1,89 @@
+# =============================================================================
+# CANDIDATE PROFILE — TEMPLATE / EXAMPLE
+# Copy this file to `profile.yaml` and replace everything with your own details.
+# `profile.yaml` is git-ignored, so your real data is never committed.
+#   analyze.py reads it to score fit; generate.py reads it to build documents.
+# All content below is fictional and only shows the expected structure.
+# =============================================================================
+
+name: Jordan Rivera
+location: City, ST
+phone: "(555) 555-0100"
+email: your.email@example.com
+linkedin: linkedin.com/in/your-profile
+languages: e.g. Native fluency in English and Spanish (bilingual)
+
+# -----------------------------------------------------------------------------
+# FILTERS — hard rules used to flag dealbreakers during scoring
+# -----------------------------------------------------------------------------
+filters:
+  salary_floor: 75000          # a posting whose max is below this is flagged
+  remote_preference: true      # remote-first preferred
+  avoid_hard_sql: false        # set true to flag roles that REQUIRE SQL
+  avoid_onsite: false          # on-site as a soft negative vs an automatic skip
+
+# -----------------------------------------------------------------------------
+# RED FLAGS — patterns that signal a low-quality / scam / MLM posting
+# -----------------------------------------------------------------------------
+red_flags:
+  - "'No experience required' paired with a high salary = often commission-only sales"
+  - "Salary ranges far above market on aggregator sites = scraped / unrealistic data"
+  - "'Training provided' + 'entry-level' framing = sometimes MLM or door-to-door"
+
+# -----------------------------------------------------------------------------
+# RESUME ANGLES — tailored positionings; the analyzer picks the best by `key`,
+# and generate.py uses the matching summary + bullet emphasis.
+# -----------------------------------------------------------------------------
+angles:
+  FA:
+    label: Financial Analyst / FP&A
+    summary: >-
+      Finance professional with N+ years in [domain], with strengths in
+      reporting, variance analysis, and data-driven decision support.
+    emphasis: [analytics, reporting, forecasting, excel]
+
+  CSA:
+    label: Client Service / Client Success
+    summary: >-
+      Relationship-driven professional supporting clients and stakeholders,
+      with strong communication and platform fluency.
+    emphasis: [client_service, crm, support]
+
+# -----------------------------------------------------------------------------
+# EXPERIENCE — most recent first. `bullets` is the full pool; generate.py
+# surfaces the ones matching the chosen angle's emphasis + the job's keywords.
+# -----------------------------------------------------------------------------
+experience:
+  - title: Example Job Title
+    company: Example Company
+    start: "Mon YYYY"
+    end: "Mon YYYY"
+    bullets:
+      - text: "Quantified accomplishment showing scope and impact (numbers help)."
+        tags: [analytics, reporting]
+      - text: "Another accomplishment tagged so the generator can pick it per angle."
+        tags: [client_service, crm]
+
+  - title: Earlier Role
+    company: Another Company
+    start: "Mon YYYY"
+    end: "Mon YYYY"
+    bullets:
+      - text: "Earlier accomplishment with a measurable result."
+        tags: [process, operations]
+
+# -----------------------------------------------------------------------------
+# EDUCATION
+# -----------------------------------------------------------------------------
+education:
+  - degree: "Degree (in progress or completed)"
+    school: "School Name"
+    dates: "YYYY - YYYY"
+
+# -----------------------------------------------------------------------------
+# SKILLS — grouped; generate.py renders these and can reorder per job.
+# -----------------------------------------------------------------------------
+skills:
+  Tools: [Tool A, Tool B, Advanced Excel]
+  Analytics: [Python, R, Power BI]
+  Certifications: [Cert A, Cert B]

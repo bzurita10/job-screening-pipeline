@@ -1,0 +1,7 @@
+Financial Data Analyst — On-site (Tampa, FL)
+
+Seeking a Financial Data Analyst to build and maintain data pipelines and reporting infrastructure for our finance org. This is a hands-on technical role.
+
+Requirements: Expert-level SQL is required — you will write complex queries daily against our data warehouse and this is non-negotiable. Strong Python for ETL. Experience building dbt models and maintaining Airflow DAGs. 3+ years in a data-engineering or analytics-engineering role. Must be on-site in our Tampa office 5 days per week.
+
+Salary: $68,000 - $74,000 depending on experience.

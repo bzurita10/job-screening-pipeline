@@ -1,0 +1,199 @@
+# =============================================================================
+# WATCHLIST — the companies scan.py polls, plus the title/location filters.
+#
+#   python scan.py --check      verify every slug resolves (DO THIS FIRST)
+#   python scan.py              poll everything, show new matches
+#   python scan.py --analyze    also score the top matches
+#
+# ADDING A COMPANY: open its careers page, click one job, and read the board
+# URL in your browser's address bar:
+#   job-boards.greenhouse.io/ACME  -> ats: greenhouse,      slug: acme
+#   jobs.lever.co/ACME             -> ats: lever,           slug: acme
+#   jobs.ashbyhq.com/ACME          -> ats: ashby,           slug: acme
+#   apply.workable.com/ACME        -> ats: workable,        slug: acme
+#   jobs.smartrecruiters.com/ACME  -> ats: smartrecruiters, slug: acme
+# Anything on *.myworkdayjobs.com is Workday: no public feed, can't be polled —
+# track those via LinkedIn alerts instead.
+#
+# VERIFIED = the board was confirmed to resolve (live posting count returned).
+# CHECK    = plausible slug, NOT yet confirmed — run --check.
+# =============================================================================
+
+companies:
+  # ---- Financial advisory / wealth management --------------------------
+  - name: Addepar            # VERIFIED (99 postings) — FP&A, reporting,
+    ats: greenhouse          #   portfolio-ops & client-solutions analyst roles
+    slug: addepar1           #   (note the "1" — plain "addepar" is wrong)
+  - name: Savvy Wealth       # VERIFIED (21) — AI-native RIA, uses Claude in-house;
+    ats: ashby               #   client associate, investment/brokerage ops. Strong fit.
+    slug: savvy
+  - name: Facet              # VERIFIED (18) — flat-fee financial planning (CFP-led)
+    ats: workable
+    slug: facetwealth
+  - name: Carta              # VERIFIED (69) — cap-table/fund-admin; finance &
+    ats: greenhouse          #   equity analyst rotational program
+    slug: carta
+  - name: Betterment         # VERIFIED (25) — robo-advisor / RIA
+    ats: greenhouse
+    slug: betterment
+
+  - name: Wealthfront        # VERIFIED — Lever (apply URL confirms the board);
+    ats: lever               #   has FP&A Analyst, Financial Planning Analyst,
+    slug: wealthfront        #   Financial Intelligence Analyst, Client Services
+
+  # ---- AI / frontier labs ---------------------------------------------
+  - name: Anthropic          # VERIFIED (605)
+    ats: greenhouse
+    slug: anthropic
+  - name: OpenAI             # VERIFIED (813)
+    ats: ashby
+    slug: openai
+  - name: Scale AI           # VERIFIED (224)
+    ats: greenhouse
+    slug: scaleai
+
+  # ---- Fintech ---------------------------------------------------------
+  - name: Stripe             # VERIFIED (665, large board)
+    ats: greenhouse
+    slug: stripe
+  - name: Plaid              # VERIFIED — Ashby (110+ roles incl. Strategic Finance,
+    ats: ashby               #   Business Operations, SEC Reporting). Was wrongly
+    slug: plaid              #   set to greenhouse, which 404'd.
+
+  # ---- High-growth fintech / startups ---------------------------------
+  # Strong fits: these hire Strategic Finance, FP&A, Business Ops & rotational
+  # finance roles, where 6 yrs of wealth-mgmt depth is the differentiator.
+  # ATS confirmed from live posting URLs (Sep 2026) unless noted — run --check.
+  - name: Ramp               # WEB-VERIFIED — Ashby (live role: Associate,
+    ats: ashby               #   Strategic Finance). jobs.ashbyhq.com/ramp
+    slug: ramp
+  - name: Brex               # WEB-VERIFIED — Greenhouse (has a finance
+    ats: greenhouse          #   rotational program). job-boards.greenhouse.io/brex
+    slug: brex
+  - name: Mercury            # WEB-VERIFIED — Greenhouse.
+    ats: greenhouse          #   job-boards.greenhouse.io/mercury
+    slug: mercury
+  - name: Vanta              # WEB-VERIFIED — Ashby (live role: Senior Data
+    ats: ashby               #   Analyst, Strategic Finance). jobs.ashbyhq.com/vanta
+    slug: vanta
+  - name: Rippling
+    ats: rippling
+    slug: rippling
+    
+  # ---- Big tech (pollable tier) ---------------------------------------
+  # NOTE: Apple, NVIDIA and Microsoft can't be polled — proprietary / Workday
+  # boards with no public feed. Track those via LinkedIn alerts instead.
+  # These five ARE pollable and hire finance/strategy roles. ATS cross-checked
+  # against a public board registry validated 2026-09-14 — run --check.
+  - name: Databricks         # WEB-VERIFIED — Greenhouse.
+    ats: greenhouse
+    slug: databricks
+  - name: Snowflake          # WEB-VERIFIED — Ashby (NOT greenhouse).
+    ats: ashby
+    slug: snowflake
+  - name: Datadog            # WEB-VERIFIED — Greenhouse.
+    ats: greenhouse
+    slug: datadog
+  - name: Cloudflare         # WEB-VERIFIED — Greenhouse.
+    ats: greenhouse
+    slug: cloudflare
+  - name: Palantir           # WEB-VERIFIED — Lever.
+    ats: lever               #   api.lever.co/v0/postings/palantir
+    slug: palantir
+
+# -----------------------------------------------------------------------------
+# TITLE FILTERS — a posting must match at least one `include` and no `exclude`.
+# Case-insensitive substring match.
+# -----------------------------------------------------------------------------
+titles:
+  include:
+    - financial analyst
+    - finance analyst
+    - fp&a
+    - financial planning
+    - financial reporting
+    - business analyst
+    - data analyst
+    - reporting analyst
+    - investment analyst
+    - investment operations
+    - portfolio analyst
+    - portfolio data
+    - research analyst
+    - client success
+    - customer success
+    - client service
+    - client associate
+    - client solutions
+    - strategic finance
+    - business operations
+    - revenue analyst
+    - revenue operations
+    - pricing analyst
+    - ai program
+    - ai enablement
+    - forward deployed
+  # ADVISORY / CONSULTING — these count as includes AND bypass the location
+  # filter (on-site or travel accepted), since good advisory roles are rarely
+  # remote. Kept separate so the location bypass only applies to this set.
+  advisory:
+    - business consultant
+    - business consulting
+    - management consultant
+    - financial consultant
+    - strategy analyst
+    - corporate strategy
+    - growth strategy
+    - advisory associate
+  exclude:
+    - senior director
+    - vice president
+    - "vp,"
+    - principal
+    - staff
+    - head of
+    - intern
+    - machine learning engineer
+    - software engineer
+    - infrastructure engineer
+    - data engineer
+    - security
+    - recruiter
+    # quota / cold-call grunt work — kept out on purpose
+    - sales development
+    - business development representative
+    - account executive
+    - " sdr"
+    - " bdr"
+    - cold calling
+
+# -----------------------------------------------------------------------------
+# LOCATION FILTER — a posting passes if its location matches any pattern, or if
+# remote_ok is true and the posting looks remote. Empty `allow` = accept all.
+# -----------------------------------------------------------------------------
+location:
+  remote_ok: true
+  allow:
+    - remote
+    - united states
+    - florida
+    - orlando
+    - kissimmee
+    - miami
+    - tampa
+    - new york
+    - anywhere
+
+# -----------------------------------------------------------------------------
+# SALARY OVERRIDE — lets high-paying (or stretch) roles through even when they
+# fail the location filter. The TITLE filter still applies either way.
+#   location_override_min:        a role whose pay tops out at or above this
+#                                 bypasses the location filter, wherever it is.
+#   bypass_location_if_unlisted:  if true, roles with NO detectable salary also
+#                                 bypass location (shown tagged 'salary n/l'),
+#                                 so a high payer that hides comp isn't dropped.
+#                                 This widens the funnel — set false to tighten.
+# -----------------------------------------------------------------------------
+salary:
+  location_override_min: 200000
+  bypass_location_if_unlisted: true

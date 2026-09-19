@@ -1,0 +1,29 @@
+# Personal data — never commit
+# (profile.yaml has your contact details; data/ is your live tracker;
+#  output/ holds generated resumes & cover letters with contact info)
+profile.yaml
+data/
+output/
+
+# Secrets
+.env
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+data/seen_jobs.json
+jobs/inbox/
+jobs/pasted/
+digests/
+health/
+logs/
+*.log

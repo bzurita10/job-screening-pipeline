@@ -1,0 +1,6 @@
+# research.py input — one role per line. Freeform; more context = better hits.
+# Run: python research.py jobs/example_roles.txt
+Financial Analyst, DVC FP&A, Disney, Celebration FL
+Sr Financial Analyst, WDI Project Finance, Disney, Lake Buena Vista FL
+Pricing Analyst, Walt Disney World Resort, Lake Buena Vista FL
+Sr Business Analyst, Buena Vista Construction Company, Disney, Lake Buena Vista FL
